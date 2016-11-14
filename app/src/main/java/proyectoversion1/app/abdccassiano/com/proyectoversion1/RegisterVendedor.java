@@ -4,13 +4,11 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +25,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class RegisterGerente extends AppCompatActivity {
+public class RegisterVendedor extends AppCompatActivity {
 
     private Button buttonChoose;
 
@@ -48,10 +46,13 @@ public class RegisterGerente extends AppCompatActivity {
 
     private int PICK_IMAGE_REQUEST = 1;
 
+    // Progress dialog
+    private ProgressDialog pDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_gerente);
+        setContentView(R.layout.register_vendedor);
 
 
         etNombre = (EditText) findViewById(R.id.etNombre);
@@ -93,24 +94,19 @@ public class RegisterGerente extends AppCompatActivity {
                 final String Direccion = etDireccion.getText().toString();
                 final String Telefono = etTelefono.getText().toString();
                 final String Email = etEmail.getText().toString();
-
                 //final String Foto = etFoto.getText().toString();
 
-                //final int age = Integer.parseInt(etAge.getText().toString());
-                //final String password = etPassword.getText().toString();
+                /*final int age = Integer.parseInt(etAge.getText().toString());
+                final String password = etPassword.getText().toString();*/
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
-
                     @Override
                     public void onResponse(String response) {
-
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-
                             if (success) {
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterGerente.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterVendedor.this);
                                 builder.setMessage("Registro insertado!")
                                         .setNegativeButton("Cerarr", null)
                                         .create()
@@ -129,25 +125,21 @@ public class RegisterGerente extends AppCompatActivity {
                                 bRegister.setVisibility(View.INVISIBLE);
                                 //startActivity(new Intent(RegisterGerente.this, PanelAdmin.class));
                             } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterGerente.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterVendedor.this);
                                 builder.setMessage("No se pudo relizar el registro!")
                                         .setNegativeButton("Cerrar", null)
                                         .create()
                                         .show();
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-
                         }
-
                     }
                 };
 
-                RegisterRequestGerentes registerRequest = new RegisterRequestGerentes(Image, Nombre,ApellPat ,ApellMat , Direccion, Telefono, Email, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(RegisterGerente.this);
+                RegisterRequestVendedor registerRequest = new RegisterRequestVendedor(Image, Nombre,ApellPat ,ApellMat , Direccion, Telefono, Email, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(RegisterVendedor.this);
                 queue.add(registerRequest);
-
             }
         });
 
@@ -160,7 +152,6 @@ public class RegisterGerente extends AppCompatActivity {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
-
     //pasamos la imagen seleccionada a imageView para mostrarla en el formulario
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -173,7 +164,7 @@ public class RegisterGerente extends AppCompatActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 //Setting the Bitmap to ImageView
                 imageView.setImageBitmap(bitmap);
-                //Descubrimos boton hasta que seleccionen foto
+                //Escondemos boton registrar
                 bRegister.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 e.printStackTrace();

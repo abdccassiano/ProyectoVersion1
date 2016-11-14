@@ -1,10 +1,5 @@
 package proyectoversion1.app.abdccassiano.com.proyectoversion1;
 
-/**
- * Created by servus on 14/10/2016.
- */
-import android.app.ProgressDialog;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
@@ -12,14 +7,16 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterRequestGerentes extends StringRequest {
+/**
+ * Created by servus on 11/11/2016.
+ */
+public class RegisterRequestVendedor extends StringRequest{
 
-    private static final String REGISTER_REQUEST_URL = "http://websandroid.esy.es/AppAndroid/Gerentes/Register.php";
+    private static final String REGISTER_REQUEST_URL = "http://websandroid.esy.es/AppAndroid/Vendedores/Register.php";
     private Map<String, String> params;
 
-    public RegisterRequestGerentes(String Image, String Nombre, String ApellPat, String ApellMat, String Direccion, String Telefono, String Email, Response.Listener<String> listener) {
+    public RegisterRequestVendedor(String Image, String Nombre, String ApellPat, String ApellMat, String Direccion, String Telefono, String Email, Response.Listener<String> listener) {
         super(Method.POST, REGISTER_REQUEST_URL, listener, null);
-
         params = new HashMap<>();
         params.put("image", Image);
         params.put("nombre", Nombre);

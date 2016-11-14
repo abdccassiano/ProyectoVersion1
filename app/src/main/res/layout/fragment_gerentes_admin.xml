@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
+    <!--<TextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +15,13 @@
         android:text="Consulta Gerentes"
         android:textColor="#000"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" />-->
+    <android.support.v7.widget.SearchView
+        android:id="@+id/searView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.SearchView>
+
     <ListView
         android:id="@+id/listviewResponse"
         android:layout_width="fill_parent"

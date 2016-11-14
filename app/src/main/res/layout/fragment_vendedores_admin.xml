@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    tool:context="fragments.Admin.Vendedores"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:text="Consulta Vendedores"
         android:textColor="#000"
         android:textSize="18sp"
         android:textStyle="bold" />
+    <ListView
+        android:id="@+id/listviewResponse"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40px"
+        android:padding="20dp">
+    </ListView>
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/layoutInner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnFloatingAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/ic_plus"
+            app:fabSize="normal"
+            app:borderWidth="0dp"
+            android:layout_marginBottom="@dimen/fab_margin_bottom"
+            android:layout_marginRight="@dimen/fab_margin_right"/>
+    </FrameLayout>
+
+</RelativeLayout>

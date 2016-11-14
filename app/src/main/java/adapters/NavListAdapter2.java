@@ -8,7 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import models.NavItem2;
 import proyectoversion1.app.abdccassiano.com.proyectoversion1.R;
@@ -21,13 +23,17 @@ public class NavListAdapter2 extends ArrayAdapter<NavItem2>{
     Context context;
     int resLayout;
     List<NavItem2> listNavItems;
+    ArrayList<NavItem2> arrayList;
 
-    public NavListAdapter2(Context context, int resLayout, List<NavItem2> listNavItems) {
-        super(context, resLayout, listNavItems);
+    public NavListAdapter2(Context context, int resLayout, List<NavItem2> apps) {
+        super(context, resLayout, apps);
 
         this.context = context;
         this.resLayout = resLayout;
-        this.listNavItems = listNavItems;
+        this.listNavItems = apps;
+
+        arrayList = new ArrayList<NavItem2>();
+        arrayList.addAll(listNavItems);
     }
 
     @SuppressLint("ViewHolder") @Override
@@ -52,5 +58,28 @@ public class NavListAdapter2 extends ArrayAdapter<NavItem2>{
         navIcon.setImageResource(navItem.getResIcon());
 
         return v;
+    }
+
+    //Buscador para la consulta
+    public void filter(String charText) {
+
+        charText = charText.toLowerCase(Locale.getDefault());
+
+        listNavItems.clear();
+        if (charText.length() == 0) {
+            listNavItems.addAll(arrayList);
+
+        } else {
+            for (NavItem2 postDetail : arrayList) {
+                if (charText.length() != 0 && postDetail.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    listNavItems.add(postDetail);
+                }
+
+                else if (charText.length() != 0 && postDetail.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    listNavItems.add(postDetail);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

@@ -1,11 +1,13 @@
 package fragments.Admin;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,11 +38,15 @@ import java.util.List;
 import adapters.NavListAdapter2;
 import models.NavItem2;
 import proyectoversion1.app.abdccassiano.com.proyectoversion1.AppController;
+import proyectoversion1.app.abdccassiano.com.proyectoversion1.LoginActivity;
 import proyectoversion1.app.abdccassiano.com.proyectoversion1.R;
 import proyectoversion1.app.abdccassiano.com.proyectoversion1.RegisterGerente;
+import proyectoversion1.app.abdccassiano.com.proyectoversion1.Session;
 
 
 public class Gerentes extends Fragment{
+
+	private Session session;
 
 	// json array response url php
 	private String urlJsonArryPHP = "http://websandroid.esy.es/AppAndroid/Gerentes/Consulta.php";
@@ -61,11 +68,28 @@ public class Gerentes extends Fragment{
 	//Botton animado
 	private FloatingActionButton btnFab;
 
+	private SearchView searchView;
+
+	//Variable para atrapar el contexto del fragment
+	public Context thisContext;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
 		View v = inflater.inflate(R.layout.fragment_gerentes_admin, container, false);
+
+		//Atrapamos contexto del activity
+		thisContext = container.getContext();
+
+		//Se hace una instacia de Sesiones
+		session = new Session(thisContext);
+
+		if (!session.loggedin()){
+			logout();
+		}
+
+		searchView = (SearchView)v.findViewById(R.id.searView);
 
 		lvNav = (ListView)v.findViewById(R.id.listviewResponse);
 
@@ -90,6 +114,7 @@ public class Gerentes extends Fragment{
 			@Override
 			public void onClick(View v) {
 				//Toast.makeText(getActivity(), "Hello FAB!", Toast.LENGTH_SHORT).show();
+
 				startActivity(new Intent(getActivity(), RegisterGerente.class));
 
 				// TODO issue: Rotate animation in pre-lollipop works only once, issue to be resolved!
@@ -173,16 +198,33 @@ public class Gerentes extends Fragment{
 
 								listNavItems.add(new NavItem2(gerenteId,nombreCompleto,direccion,telefono,email
 										,R.drawable.user));
+
                                 /*jsonResponse += "GerenteId: " + gerenteId + "\n\n";
                                 jsonResponse += "Nombre: " + nombre + "\n\n";
                                 jsonResponse += "Paterno: " + apellidoPaterno + "\n\n";
                                 jsonResponse += "Materno: " + apellidoMaterno + "\n\n\n";*/
 
 							}
-							NavListAdapter2 navListAdapter2 = new NavListAdapter2(
+							final NavListAdapter2 navListAdapter2 = new NavListAdapter2(
 									getActivity(), R.layout.item_nav_list_consulta, listNavItems);
 
 							lvNav.setAdapter(navListAdapter2);
+
+							//LLamos a traer el arreglo para hacer una busqueda
+
+							searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+								@Override
+								public boolean onQueryTextSubmit(String query) {
+									return false;
+								}
+
+								@Override
+								public boolean onQueryTextChange(String searchquery) {
+									navListAdapter2.filter(searchquery.toString().trim());
+									lvNav.invalidate();
+									return true;
+								}
+							});
 
 							//txtResponse.setText(jsonResponse);
 
@@ -219,5 +261,14 @@ public class Gerentes extends Fragment{
 			pDialog.dismiss();
 	}
 
+	//función para salir
+	public void logout(){
 
+		session.setLoggedin(false);
+		session.editor.clear();
+		session.editor.commit();
+
+		startActivity(new Intent(thisContext, LoginActivity.class));
+		getActivity().finish();
+	}
 }
