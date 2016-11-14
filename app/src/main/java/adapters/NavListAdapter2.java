@@ -1,12 +1,16 @@
 package adapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,8 @@ public class NavListAdapter2 extends ArrayAdapter<NavItem2>{
     List<NavItem2> listNavItems;
     ArrayList<NavItem2> arrayList;
 
+    public Context thisContext;
+
     public NavListAdapter2(Context context, int resLayout, List<NavItem2> apps) {
         super(context, resLayout, apps);
 
@@ -32,6 +38,7 @@ public class NavListAdapter2 extends ArrayAdapter<NavItem2>{
         this.resLayout = resLayout;
         this.listNavItems = apps;
 
+        //Añadimos la lista de arreglos a un arreglo para hacer la busqueda
         arrayList = new ArrayList<NavItem2>();
         arrayList.addAll(listNavItems);
     }
@@ -41,6 +48,10 @@ public class NavListAdapter2 extends ArrayAdapter<NavItem2>{
 
         View v = View.inflate(context, resLayout, null);
 
+
+        Button buttonEdit = (Button) v.findViewById(R.id.buttonEdit);
+        Button buttonDelete = (Button) v.findViewById(R.id.buttonDelete);
+
         TextView gerenteid = (TextView) v.findViewById(R.id.gerenteid);
         TextView nombre  = (TextView) v.findViewById(R.id.nombre);
         TextView direccion = (TextView) v.findViewById(R.id.direccion);
@@ -48,7 +59,7 @@ public class NavListAdapter2 extends ArrayAdapter<NavItem2>{
         TextView email = (TextView) v.findViewById(R.id.email);
         ImageView navIcon =  (ImageView) v.findViewById(R.id.nav_icon);
 
-        NavItem2 navItem = listNavItems.get(position);
+        final NavItem2 navItem = listNavItems.get(position);
 
         gerenteid.setText(navItem.getGerenteId());
         nombre.setText(navItem.getNombre());
@@ -56,6 +67,33 @@ public class NavListAdapter2 extends ArrayAdapter<NavItem2>{
         telefono.setText(navItem.getTelefono());
         email.setText(navItem.getEmail());
         navIcon.setImageResource(navItem.getResIcon());
+
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"Gerente id: "+navItem.getGerenteId(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("¿Quiere Eliminar al Usuario?")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getContext(), "OK", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.setNegativeButton("Cancela", null)
+                        .create()
+                        .show();
+
+            }
+        });
+
 
         return v;
     }
@@ -82,4 +120,6 @@ public class NavListAdapter2 extends ArrayAdapter<NavItem2>{
         }
         notifyDataSetChanged();
     }
+
+
 }

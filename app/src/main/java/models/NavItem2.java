@@ -23,7 +23,6 @@ public class NavItem2 {
     }
 
     public String getGerenteId(){
-
         return gerentid;
     }
 

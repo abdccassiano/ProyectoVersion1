@@ -226,6 +226,8 @@ public class Gerentes extends Fragment{
 								}
 							});
 
+
+
 							//txtResponse.setText(jsonResponse);
 
 						} catch (JSONException e) {

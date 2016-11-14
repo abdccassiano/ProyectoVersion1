@@ -6,10 +6,17 @@
     android:padding="10dp" >
 
     <Button
-        android:id="@+id/buttonId"
+        android:id="@+id/buttonEdit"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/ico_edit"/>
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/ico_delete"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="-20dp"/>
     <ImageView
         android:id="@+id/nav_icon"
         android:layout_width="80dp"

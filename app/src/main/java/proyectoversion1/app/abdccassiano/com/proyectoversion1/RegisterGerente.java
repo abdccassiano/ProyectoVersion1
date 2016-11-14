@@ -9,12 +9,14 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -40,6 +42,8 @@ public class RegisterGerente extends AppCompatActivity {
     private EditText etTelefono;
     private EditText etEmail;
 
+    private TextView message;
+
     private Button bRegister;
 
     private EditText editTextName;
@@ -53,7 +57,7 @@ public class RegisterGerente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_gerente);
 
-
+        message = (TextView) findViewById(R.id.message);
         etNombre = (EditText) findViewById(R.id.etNombre);
         etApellPat = (EditText) findViewById(R.id.etApellPat);
         etApellMat = (EditText) findViewById(R.id.etApellMat);
@@ -94,6 +98,11 @@ public class RegisterGerente extends AppCompatActivity {
                 final String Telefono = etTelefono.getText().toString();
                 final String Email = etEmail.getText().toString();
 
+                //Escondemos boton registrar
+                bRegister.setVisibility(View.INVISIBLE);
+                //Mostramos el mensaje de espere...
+                message.setText("Espere porfavor...");
+
                 //final String Foto = etFoto.getText().toString();
 
                 //final int age = Integer.parseInt(etAge.getText().toString());
@@ -125,8 +134,8 @@ public class RegisterGerente extends AppCompatActivity {
                                 etTelefono.getText().clear();
                                 etEmail.getText().clear();
 
-                                //Escondemos boton registrar
-                                bRegister.setVisibility(View.INVISIBLE);
+                                message.setText("");
+
                                 //startActivity(new Intent(RegisterGerente.this, PanelAdmin.class));
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterGerente.this);
