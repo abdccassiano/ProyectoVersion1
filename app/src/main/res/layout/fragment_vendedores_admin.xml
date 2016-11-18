@@ -12,12 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Consulta Vendedores"
+        android:text="Consulta Negocios"
         android:textColor="#000"
         android:textSize="18sp"
         android:textStyle="bold" />
     <ListView
-        android:id="@+id/listviewResponse"
+        android:id="@+id/listviewResponseV"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40px"
@@ -25,12 +25,12 @@
     </ListView>
 
     <FrameLayout
-        android:id="@+id/layoutInner"
+        android:id="@+id/layoutInnerV"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btnFloatingAction"
+            android:id="@+id/btnFloatingActionV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"

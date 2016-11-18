@@ -26,7 +26,6 @@
         <activity android:name=".PanelVendedor" />
         <activity android:name=".PanelUsuario" />
         <activity android:name=".RegisterGerente" />
-        <activity android:name=".RegisterVendedor"></activity>
     </application>
 
 </manifest>

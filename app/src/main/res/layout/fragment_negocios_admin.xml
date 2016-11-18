@@ -17,7 +17,7 @@
         android:textSize="18sp"
         android:textStyle="bold" />
     <ListView
-        android:id="@+id/listviewResponse"
+        android:id="@+id/listviewResponseN"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40px"
@@ -25,12 +25,12 @@
     </ListView>
 
     <FrameLayout
-        android:id="@+id/layoutInner"
+        android:id="@+id/layoutInnerN"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btnFloatingAction"
+            android:id="@+id/btnFloatingActionN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"

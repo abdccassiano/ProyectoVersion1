@@ -79,21 +79,10 @@ public class NavListAdapter2 extends ArrayAdapter<NavItem2>{
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("¿Quiere Eliminar al Usuario?")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getContext(), "OK", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                builder.setNegativeButton("Cancela", null)
-                        .create()
-                        .show();
+                Toast.makeText(getContext(),"Eliminar", Toast.LENGTH_SHORT).show();
 
             }
         });
-
 
         return v;
     }
@@ -120,6 +109,5 @@ public class NavListAdapter2 extends ArrayAdapter<NavItem2>{
         }
         notifyDataSetChanged();
     }
-
 
 }
